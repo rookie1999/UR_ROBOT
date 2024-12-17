@@ -1,0 +1,5 @@
+<launch>
+    <!-- ros_control trajectory control -->
+    <!-- 加载关节轨迹控制器 -->
+    <include file="$(find ur_moveit_config)/launch/ros_controllers.launch" />
+</launch>

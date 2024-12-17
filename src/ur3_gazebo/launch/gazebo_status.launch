@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- 将关节控制器的配置参数加载到参数服务器中 -->
+    <rosparam file="$(find ur_moveit_config)/config/gazebo_controllers.yaml" command="load"/>
+    <!-- 关节状态控制器 -->
+    <node name="joint_controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" args="joint_state_controller" />
+
+    <!-- 运行robot_state_publisher节点，发布tf  -->
+     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+        respawn="false" output="screen"/>
+</launch>

@@ -1,0 +1,11 @@
+<launch>
+    <!-- Launch gazebo -->
+    <include file="$(find ur3_gazebo)/launch/gazebo_world.launch" />
+    <!-- ros control arm launch file -->
+    <include file="$(find ur3_gazebo)/launch/gazebo_status.launch" />
+    <!-- ros_control trajectory control dof arm launch file -->
+    <include file="$(find ur3_gazebo)/launch/trajectory_controller.launch" />
+    <!-- moveit launch file -->
+    <include file="$(find ur3_gazebo)/launch/moveit_planning_execution.launch" />
+
+</launch>

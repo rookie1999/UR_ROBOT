@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: ur3
+    relative_path: urdf/ur3.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/ur3.srdf
+  CONFIG:
+    author_name: bz
+    author_email: 1456683521@qq.com
+    generated_timestamp: 1734351054

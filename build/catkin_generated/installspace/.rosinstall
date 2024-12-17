@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/benson/projects/moveit_tutorial/ur_robot/install/setup.sh
