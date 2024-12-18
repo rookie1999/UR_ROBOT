@@ -134,6 +134,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/benson/projects/moveit_tutorial/ur_robot/build/ur3/cmake_install.cmake")
   include("/home/benson/projects/moveit_tutorial/ur_robot/build/ur3_gazebo/cmake_install.cmake")
   include("/home/benson/projects/moveit_tutorial/ur_robot/build/ur_moveit_config/cmake_install.cmake")
+  include("/home/benson/projects/moveit_tutorial/ur_robot/build/ur_program_move/cmake_install.cmake")
 
 endif()
 

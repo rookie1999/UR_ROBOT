@@ -1,0 +1,8 @@
+prefix=/home/benson/projects/moveit_tutorial/ur_robot/devel
+
+Name: ur_program_move
+Description: Description of ur_program_move
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
