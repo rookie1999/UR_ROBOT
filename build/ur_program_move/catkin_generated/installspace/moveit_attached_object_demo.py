@@ -1,7 +1,5 @@
 import rospy
 import sys
-import thread
-import copy
 import moveit_commander
 from moveit_commander import RobotCommander, MoveGroupCommander, PlanningSceneInterface
 from geometry_msgs.msg import Pose, PoseStamped
@@ -10,7 +8,12 @@ from math import radians
 from copy import deepcopy
 
 class MoveitAttachedObjectDemo:
-
+    """
+    添加附着物体与碰撞物体进行自主避障
+    1. roslaunch ur_moveit_config demo.launch
+    2 rosrun ur_program_move moveit_attached_object_demo.py
+    注意：该demo下如果调整附着物体与末端坐标系的三维坐标关系，当该物体嵌入进末端，会直接显示碰撞产生
+    """
     def __init__(self):
         # 初始化move_group的API
         moveit_commander.roscpp_initialize(sys.argv)
@@ -18,7 +21,7 @@ class MoveitAttachedObjectDemo:
         r = rospy.Rate(1)
 
         # 初始化场景对象
-        scene = PlanningScene()
+        scene = PlanningSceneInterface()
         r.sleep()
 
         # 初始化需要使用move group控制的机械臂中的arm group
@@ -43,9 +46,8 @@ class MoveitAttachedObjectDemo:
         r.sleep()
 
         # 移除场景中之前运行的残留物体
-        scene.remove_attached_object(end_effector_link, "tool")
+        # scene.remove_attached_object(end_effector_link, "tool")
         scene.remove_world_object("table")
-        scene.remove_world_object("target")
 
         # 设置桌面的高度
         table_height = 0.5
@@ -58,7 +60,7 @@ class MoveitAttachedObjectDemo:
         p.header.frame_id = end_effector_link
         p.pose.position.x = tool_size[0] / 2. - 0.025
         p.pose.position.y = -0.015
-        p.pose.position.z = 0
+        p.pose.position.z = 0.015
         p.pose.orientation.x = 0
         p.pose.orientation.y = 0
         p.pose.orientation.z = 0
@@ -70,9 +72,12 @@ class MoveitAttachedObjectDemo:
         # 将table加入到scene
         table_pose = PoseStamped()
         table_pose.header.frame_id = "base_link"
-        table_pose.pose.position.x = 0.25
-        table_pose.pose.position.y = 0
-        table_pose.pose.position.z = table_height + table_size[2] / 2.
+        table_pose.pose.position.x = -0.3
+        table_pose.pose.position.y = -0.3
+        table_pose.pose.position.z = table_height + table_size[2] / 2. + 0.1
+        table_pose.pose.orientation.x = 0
+        table_pose.pose.orientation.y = 0
+        table_pose.pose.orientation.z = 0
         table_pose.pose.orientation.w = 1.
         scene.add_box("table", table_pose, table_size)
 
@@ -87,8 +92,12 @@ class MoveitAttachedObjectDemo:
         arm.go()
         r.sleep()
 
+        arm.set_named_target("home")
+        arm.go()
+        r.sleep()
+
         moveit_commander.roscpp_shutdown()
     
 
 if __name__ == "__main__":
-    MoveAttachedObjectDemo()
+    MoveitAttachedObjectDemo()

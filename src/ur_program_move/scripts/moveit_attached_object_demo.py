@@ -8,7 +8,12 @@ from math import radians
 from copy import deepcopy
 
 class MoveitAttachedObjectDemo:
-
+    """
+    添加附着物体与碰撞物体进行自主避障
+    1. roslaunch ur_moveit_config demo.launch
+    2 rosrun ur_program_move moveit_attached_object_demo.py
+    注意：该demo下如果调整附着物体与末端坐标系的三维坐标关系，当该物体嵌入进末端，会直接显示碰撞产生
+    """
     def __init__(self):
         # 初始化move_group的API
         moveit_commander.roscpp_initialize(sys.argv)
@@ -48,21 +53,21 @@ class MoveitAttachedObjectDemo:
         table_height = 0.5
         # 设置table和tool的三维尺寸
         table_size = [0.1, 0.7, 0.01]
-        # tool_size = [0.2, 0.02, 0.02]
+        tool_size = [0.2, 0.02, 0.02]
 
         # 设置tool位姿
-        # p = PoseStamped()
-        # p.header.frame_id = end_effector_link
-        # p.pose.position.x = tool_size[0] / 2. - 0.025
-        # p.pose.position.y = -0.015
-        # p.pose.position.z = 0
-        # p.pose.orientation.x = 0
-        # p.pose.orientation.y = 0
-        # p.pose.orientation.z = 0
-        # p.pose.orientation.w = 1
+        p = PoseStamped()
+        p.header.frame_id = end_effector_link
+        p.pose.position.x = tool_size[0] / 2. - 0.025
+        p.pose.position.y = -0.015
+        p.pose.position.z = 0.015
+        p.pose.orientation.x = 0
+        p.pose.orientation.y = 0
+        p.pose.orientation.z = 0
+        p.pose.orientation.w = 1
 
         # 将tool附着到机器人的终端
-        # scene.attach_box(end_effector_link, "tool", p, tool_size)
+        scene.attach_box(end_effector_link, "tool", p, tool_size)
 
         # 将table加入到scene
         table_pose = PoseStamped()
