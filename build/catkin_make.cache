@@ -1,2 +1,2 @@
-ur3:ur3_gazebo:ur_moveit_config:ur_program_move
+ur3:ur3_gazebo:ur_camera:ur_moveit_config:ur_program_move
 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCATKIN_DEVEL_PREFIX=/home/benson/projects/moveit_tutorial/ur_robot/devel -DCMAKE_INSTALL_PREFIX=/home/benson/projects/moveit_tutorial/ur_robot/install -G Unix Makefiles

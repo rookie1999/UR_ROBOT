@@ -68,3 +68,11 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/ur_program_move" TYPE PROGRAM FILES "/home/benson/projects/moveit_tutorial/ur_robot/build/ur_program_move/catkin_generated/installspace/moveit_attached_object_demo.py")
 endif()
 
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/ur_program_move" TYPE PROGRAM FILES "/home/benson/projects/moveit_tutorial/ur_robot/build/ur_program_move/catkin_generated/installspace/moveit_circle.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/ur_program_move" TYPE PROGRAM FILES "/home/benson/projects/moveit_tutorial/ur_robot/build/ur_program_move/catkin_generated/installspace/moveit_revise_trajectory.py")
+endif()
+

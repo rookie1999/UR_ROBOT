@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(ur_program_move)
+project(ur_camera)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -7,11 +7,7 @@ project(ur_program_move)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS
-  moveit_core
-  moveit_ros_planning_interface
-  rospy
-)
+find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -104,8 +100,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES ur_program_move
-#  CATKIN_DEPENDS moveit_core moveit_ros_planning_interface rospy
+#  LIBRARIES ur_camera
+#  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
 
@@ -115,14 +111,24 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
+# 下面两个解决ros.h找不到的错误,image_transport未定义的问题,以及cvbridge的问题
+find_package(catkin  REQUIRED COMPONENTS
+  roscpp
+  image_transport
+  cv_bridge
 )
+include_directories(
+    include
+    ${catkin_INCLUDE_DIRS}
+)
+# 下面两个解决opencv找不到的问题
+find_package (OpenCV REQUIRED)
+include_directories ("/usr/include/opencv4/")
+
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/ur_program_move.cpp
+#   src/${PROJECT_NAME}/ur_camera.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -133,7 +139,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(moveit_multiple_trajectory src/moveit_multiple_trajectory.cpp)
+add_executable(image_converter src/image_converter.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -146,8 +152,10 @@ add_executable(moveit_multiple_trajectory src/moveit_multiple_trajectory.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(moveit_multiple_trajectory
+# 解决cv等函数未定义的问题
+target_link_libraries(image_converter
   ${catkin_LIBRARIES}
+  ${OpenCV_LIBS}
 )
 
 #############
@@ -159,15 +167,10 @@ target_link_libraries(moveit_multiple_trajectory
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-catkin_install_python(PROGRAMS
-  scripts/moveit_forward_k.py
-  scripts/moveit_inverse_k.py
-  scripts/moveit_cartesian.py
-  scripts/moveit_attached_object_demo.py
-  scripts/moveit_circle.py
-  scripts/moveit_revise_trajectory.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# catkin_install_python(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
@@ -202,7 +205,7 @@ catkin_install_python(PROGRAMS
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_ur_program_move.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_ur_camera.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

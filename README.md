@@ -16,6 +16,8 @@
         -- moveit_inverse_k.py  使用关节空间逆向运动学
         -- moveit_cartesian.py  使用笛卡尔空间
         -- moveit_attached_object_demo.py  给空间内添加一个避障物体，机械臂运动过程中会进行自主避障
+-- ur_camera
+    测试摄像头
 ```
 
 ![alt text](流程图.jpg)
